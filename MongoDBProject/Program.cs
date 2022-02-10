@@ -1,49 +1,27 @@
-﻿using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace MongoDBProject
 {
     class Program
     {
+        private static bool MenuLoop = true;
+
         static void Main(string[] args)
         {
-            var purchaseRepository = new PurchaseRepository();
-
-            /*
-            purchaseRepository.DeleteAllPurchases();
-            */
-
-            InsertPuchases(purchaseRepository);
-
-            /*
-            var purchases = purchaseRepository.FindPurchases();
-            foreach (var purchase in purchases)
+            while (MenuLoop)
             {
-                Console.WriteLine(purchase.Placename);
-            }
-            */
+                var menu = new Menu();
+                menu.DrawMenu();
 
-            Console.ReadLine();
-        }
+                var selectedOption = Console.ReadLine();
 
-        public static void InsertPuchases(PurchaseRepository purchaseRepository)
-        {
-            var listPurchase = new List<PurchaseDTO>();
+                MenuLoop = menu.checkCloseOption(selectedOption);
 
-            for (int i = 0; i < 10000; i++)
-            {
-                var purchase = new PurchaseDTO
+                if (MenuLoop)
                 {
-                    Placename = "nome " + i,
-                    Create = "create " + i,
-                    PurchaseCategoryNumber = 1
-                };
-
-                listPurchase.Add(purchase);
+                    menu.Execute(selectedOption);
+                }
             }
-
-            purchaseRepository.InsertPurchases(listPurchase.ToArray());
         }
     }
 }
