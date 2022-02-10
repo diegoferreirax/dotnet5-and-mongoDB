@@ -1,4 +1,4 @@
-﻿namespace MongoDBProject
+﻿namespace MongoDBProject.Core.Enuns
 {
     public enum MenuOption
     {

@@ -1,32 +1,33 @@
 ﻿using MongoDB.Driver;
+using MongoDBProject.Bsons;
 using System.Collections.Generic;
 
-namespace MongoDBProject
+namespace MongoDBProject.Repositories
 {
     public class PurchaseRepository
     {
         private readonly MongoClient Connection;
         private readonly IMongoDatabase MongoDatabase;
-        private readonly IMongoCollection<PurchaseDTO> MyShoppingCollection;
+        private readonly IMongoCollection<PurchaseBson> MyShoppingCollection;
 
         public PurchaseRepository()
         {
             Connection = MongoDBConfiguration.GetConnection();
             MongoDatabase = Connection.GetDatabase("MyShopping");
-            MyShoppingCollection = MongoDatabase.GetCollection<PurchaseDTO>("MyShopping");
+            MyShoppingCollection = MongoDatabase.GetCollection<PurchaseBson>("MyShopping");
         }
 
         public void DeleteAllPurchases()
         {
-            MyShoppingCollection.DeleteMany(FilterDefinition<PurchaseDTO>.Empty, null);
+            MyShoppingCollection.DeleteMany(FilterDefinition<PurchaseBson>.Empty, null);
         }
 
         public void InsertPurchases()
         {
-            var listPurchase = new List<PurchaseDTO>();
+            var listPurchase = new List<PurchaseBson>();
             for (int i = 0; i < 10000; i++)
             {
-                var purchase = new PurchaseDTO
+                var purchase = new PurchaseBson
                 {
                     Placename = "nome " + i,
                     Create = "create " + i,
@@ -39,9 +40,9 @@ namespace MongoDBProject
             MyShoppingCollection.InsertMany(listPurchase.ToArray());
         }
 
-        public PurchaseDTO[] FindPurchases()
+        public PurchaseBson[] FindPurchases()
         {
-            var purchases = MyShoppingCollection.Find(FilterDefinition<PurchaseDTO>.Empty, null).ToList();
+            var purchases = MyShoppingCollection.Find(FilterDefinition<PurchaseBson>.Empty, null).ToList();
             return purchases.ToArray();
         }
     }

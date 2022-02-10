@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDBProject.Core;
+using System;
 
 namespace MongoDBProject
 {
@@ -13,7 +14,7 @@ namespace MongoDBProject
                 var menu = new Menu();
                 menu.DrawMenu();
 
-                var selectedOption = Console.ReadLine();
+                var selectedOption = Convert.ToInt32(Console.ReadLine());
 
                 MenuLoop = menu.checkCloseOption(selectedOption);
 

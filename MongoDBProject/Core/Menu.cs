@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MongoDBProject.Core.Enuns;
+using MongoDBProject.Repositories;
+using System;
 
-namespace MongoDBProject
+namespace MongoDBProject.Core
 {
     public class Menu
     {
@@ -11,18 +13,14 @@ namespace MongoDBProject
             purchaseRepository = new PurchaseRepository();
         }
 
-        public void Execute(string option)
+        public void Execute(int option)
         {
-            var switchOption = (MenuOption)Convert.ToInt16(option);
+            var switchOption = (MenuOption)option;
             switch (switchOption)
             {
                 case MenuOption.SearchPurchases:
                     var purchases = purchaseRepository.FindPurchases();
-                    foreach (var purchase in purchases)
-                    {
-                        Console.WriteLine(purchase.Placename);
-                    }
-
+                    Console.WriteLine("--> " + purchases.Length);
                     break;
 
                 case MenuOption.InsertPuchase:
@@ -47,9 +45,9 @@ namespace MongoDBProject
             Console.WriteLine();
         }
 
-        public bool checkCloseOption(string option)
+        public bool checkCloseOption(int option)
         {
-            if (Convert.ToInt16(option) == (int)MenuOption.CloseMenu)
+            if (option == (int)MenuOption.CloseMenu)
             {
                 Console.Clear();
                 return false;

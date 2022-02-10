@@ -2,9 +2,9 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 
-namespace MongoDBProject
+namespace MongoDBProject.Bsons
 {
-    public class PurchaseDTO
+    public class PurchaseBson
     {
         [BsonElement("_id")]
         public ObjectId Id { get; set; } = ObjectId.GenerateNewId();
