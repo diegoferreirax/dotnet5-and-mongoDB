@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using System.Collections.Generic;
 
 namespace MongoDBProject
 {
@@ -20,9 +21,22 @@ namespace MongoDBProject
             MyShoppingCollection.DeleteMany(FilterDefinition<PurchaseDTO>.Empty, null);
         }
 
-        public void InsertPurchases(PurchaseDTO[] purchaseDTO)
+        public void InsertPurchases()
         {
-            MyShoppingCollection.InsertMany(purchaseDTO);
+            var listPurchase = new List<PurchaseDTO>();
+            for (int i = 0; i < 10000; i++)
+            {
+                var purchase = new PurchaseDTO
+                {
+                    Placename = "nome " + i,
+                    Create = "create " + i,
+                    PurchaseCategoryNumber = 1
+                };
+
+                listPurchase.Add(purchase);
+            }
+
+            MyShoppingCollection.InsertMany(listPurchase.ToArray());
         }
 
         public PurchaseDTO[] FindPurchases()
