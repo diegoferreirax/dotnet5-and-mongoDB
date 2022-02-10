@@ -1,20 +1,20 @@
 ﻿using MongoDB.Driver;
-using MongoDBProject.Bsons;
+using MongoDBProject.Repositories.Bsons;
+using MongoDBProject.Repositories.Infrastructure;
 using System.Collections.Generic;
 
 namespace MongoDBProject.Repositories
 {
     public class PurchaseRepository
     {
-        private readonly MongoClient Connection;
-        private readonly IMongoDatabase MongoDatabase;
         private readonly IMongoCollection<PurchaseBson> MyShoppingCollection;
 
         public PurchaseRepository()
         {
-            Connection = MongoDBConfiguration.GetConnection();
-            MongoDatabase = Connection.GetDatabase("MyShopping");
-            MyShoppingCollection = MongoDatabase.GetCollection<PurchaseBson>("MyShopping");
+            var mongoDBConfiguration = new MongoDBConfiguration();
+            var mongoDatabase = mongoDBConfiguration.GetMongoDatabase();
+
+            MyShoppingCollection = mongoDatabase.GetCollection<PurchaseBson>("MyShopping");
         }
 
         public void DeleteAllPurchases()

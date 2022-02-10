@@ -2,7 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 
-namespace MongoDBProject.Bsons
+namespace MongoDBProject.Repositories.Bsons
 {
     public class PurchaseBson
     {
