@@ -16,7 +16,7 @@ namespace MongoDBProject
 
                 var selectedOption = Convert.ToInt32(Console.ReadLine());
 
-                MenuLoop = menu.checkCloseOption(selectedOption);
+                MenuLoop = menu.checkCloseMenu(selectedOption);
 
                 if (MenuLoop)
                 {

@@ -45,7 +45,7 @@ namespace MongoDBProject.Core
             Console.WriteLine();
         }
 
-        public bool checkCloseOption(int option)
+        public bool checkCloseMenu(int option)
         {
             if (option == (int)MenuOption.CloseMenu)
             {
