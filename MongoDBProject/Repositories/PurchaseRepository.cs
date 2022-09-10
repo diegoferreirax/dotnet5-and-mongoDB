@@ -14,7 +14,7 @@ namespace MongoDBProject.Repositories
             var mongoDBConfiguration = new MongoDBConfiguration();
             var mongoDatabase = mongoDBConfiguration.GetMongoDatabase();
 
-            MyShoppingCollection = mongoDatabase.GetCollection<PurchaseBson>("MyShopping");
+            MyShoppingCollection = mongoDatabase.GetCollection<PurchaseBson>("Purchase");
         }
 
         public void DeleteAllPurchases()
@@ -42,8 +42,7 @@ namespace MongoDBProject.Repositories
 
         public PurchaseBson[] FindPurchases()
         {
-            var purchases = MyShoppingCollection.Find(FilterDefinition<PurchaseBson>.Empty, null).ToList();
-            return purchases.ToArray();
+            return MyShoppingCollection.Find(FilterDefinition<PurchaseBson>.Empty, null).ToList().ToArray();
         }
     }
 }

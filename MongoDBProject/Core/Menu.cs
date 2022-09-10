@@ -7,10 +7,12 @@ namespace MongoDBProject.Core
     public class Menu
     {
         private readonly PurchaseRepository purchaseRepository;
+        private readonly PersonRepository personRepository;
 
         public Menu()
         {
             purchaseRepository = new PurchaseRepository();
+            personRepository = new PersonRepository();
         }
 
         public void Execute(int option)
@@ -30,6 +32,36 @@ namespace MongoDBProject.Core
                 case MenuOption.DeleteAllPurchases:
                     purchaseRepository.DeleteAllPurchases();
                     break;
+
+                case MenuOption.InsertPersons:
+                    personRepository.InsertPersons();
+                    break;
+
+                case MenuOption.SearchPersons:
+                    var persons = personRepository.FindPersons();
+                    Console.WriteLine("--> " + persons.Length);
+                    break;
+
+                case MenuOption.DeleteAllPersons:
+                    personRepository.DeleteAllPersonsAndAddress();
+                    break;
+
+                case MenuOption.FindPersonByKey:
+                    var key = Console.ReadLine();
+                    var person = personRepository.FindPersonsByKey(key);
+                    Console.WriteLine("--> " + person.Name);
+
+                    var addresses = personRepository.FindAddressesByPerson(person.Id);
+                    foreach (var address in addresses)
+                    {
+                        Console.WriteLine("--> " + address.Street);
+                    }
+
+                    break;
+
+                case MenuOption.InsertPersonsWithAddress:
+                    personRepository.InsertPersonsWithAddress();
+                    break;
             }
         }
 
@@ -40,6 +72,12 @@ namespace MongoDBProject.Core
             Console.WriteLine((int)MenuOption.SearchPurchases + " - Search purchases");
             Console.WriteLine((int)MenuOption.InsertPuchase + "- Insert puchase");
             Console.WriteLine((int)MenuOption.DeleteAllPurchases + " - Delete all purchases");
+            Console.WriteLine(" - - - - - ");
+            Console.WriteLine((int)MenuOption.InsertPersons + " - Insert persons");
+            Console.WriteLine((int)MenuOption.SearchPersons + " - Search persons");
+            Console.WriteLine((int)MenuOption.DeleteAllPersons + " - Delete all persons");
+            Console.WriteLine((int)MenuOption.FindPersonByKey + " - Find person by key");
+            Console.WriteLine((int)MenuOption.InsertPersonsWithAddress + " - Insert person with address");
             Console.WriteLine((int)MenuOption.CloseMenu + " - Close menu");
 
             Console.WriteLine();
@@ -49,9 +87,9 @@ namespace MongoDBProject.Core
         {
             if (option == (int)MenuOption.CloseMenu)
             {
-                Console.Clear();
                 return false;
             }
+            Console.Clear();
             return true;
         }
     }
